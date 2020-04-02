@@ -4,6 +4,7 @@
 
 using GeoApi.Brokers.Logging;
 using GeoApi.Brokers.Storage;
+using GeoApi.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -25,6 +26,7 @@ namespace GeoApi
             InitializeStorage(services);
             InitializeLoggers(services);
             services.AddControllers();
+            services.AddTransient<IGeoService, GeoService>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
