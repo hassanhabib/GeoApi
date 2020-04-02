@@ -9,7 +9,7 @@ using System.Linq;
 
 namespace GeoApi.Services
 {
-    public class GeoService : IGeoService
+    public partial class GeoService : IGeoService
     {
         private readonly IStorageBroker storageBroker;
         private readonly ILoggingBroker loggingBroker;
@@ -22,6 +22,12 @@ namespace GeoApi.Services
             this.loggingBroker = loggingBroker;
         }
 
-        public IQueryable<Geo> RetrieveAllGeos() => this.storageBroker.SelectAllGeos();
+        public IQueryable<Geo> RetrieveAllGeos() => TryCatch(() =>
+        {
+            IQueryable<Geo> storageGeos = this.storageBroker.SelectAllGeos();
+            ValidateStorageGeos(storageGeos);
+
+            return storageGeos;
+        });
     }
 }
