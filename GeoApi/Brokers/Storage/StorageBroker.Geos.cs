@@ -4,11 +4,14 @@
 
 using GeoApi.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace GeoApi.Brokers.Storage
 {
     public partial class StorageBroker
     {
         public DbSet<Geo> Geos { get; set; }
+
+        IQueryable<Geo> SelectAllGeos() => this.Geos.AsQueryable();       
     }
 }
