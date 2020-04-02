@@ -1,3 +1,7 @@
+// ---------------------------------------------------------------
+// Copyright (c) PiorSoft, LLC All rights reserved.
+// ---------------------------------------------------------------
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
