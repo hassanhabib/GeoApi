@@ -6,10 +6,10 @@ using System;
 
 namespace GeoApi.Models.Exceptions
 {
-    public class GeoDependencyException : Exception
+    public class GeoServiceException : Exception
     {
-        public GeoDependencyException(Exception innerException)
-            : base("Service dependency exception occurred, contact support", innerException)
+        public GeoServiceException(Exception innerException)
+           : base("Service exception occurred, contact support", innerException)
         {
         }
     }

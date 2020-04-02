@@ -2,11 +2,11 @@
 // Copyright (c) PiorSoft, LLC All rights reserved.
 // ---------------------------------------------------------------
 
-using System;
-using System.Linq;
 using GeoApi.Models;
 using GeoApi.Models.Exceptions;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Linq;
 
 namespace GeoApi.Services
 {

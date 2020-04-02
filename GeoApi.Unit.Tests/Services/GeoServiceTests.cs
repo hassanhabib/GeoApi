@@ -41,7 +41,7 @@ namespace GeoApi.Unit.Tests.Services
         private Filler<Geo> CreateGeoFiller()
         {
             var filler = new Filler<Geo>();
-            
+
             filler.Setup()
                 .OnProperty(geo => geo.City).Use(new CityName());
 

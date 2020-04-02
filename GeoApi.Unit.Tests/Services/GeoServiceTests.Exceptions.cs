@@ -5,6 +5,7 @@
 using GeoApi.Models.Exceptions;
 using Microsoft.EntityFrameworkCore;
 using Moq;
+using System;
 using Xunit;
 
 namespace GeoApi.Unit.Tests.Services
@@ -31,6 +32,29 @@ namespace GeoApi.Unit.Tests.Services
 
             this.loggingBrokerMock.Verify(broker =>
                 broker.LogError(It.Is(SameExceptionAs(expectedGeoDependencyException))),
+                    Times.Once);
+        }
+
+        [Fact]
+        public void ShouldThrowServiceExceptionOnRetrieveAllWhenServiceErrorOccursAndLogIt()
+        {
+            // given
+            var serviceException = new Exception();
+            var expectedGeoServiceException = new GeoServiceException(serviceException);
+
+            this.storageBrokerMock.Setup(broker =>
+                broker.SelectAllGeos())
+                    .Throws(serviceException);
+
+            // when . then
+            Assert.Throws<GeoServiceException>(() => this.geoService.RetrieveAllGeos());
+
+            this.storageBrokerMock.Verify(broker =>
+                broker.SelectAllGeos(),
+                    Times.Once);
+
+            this.loggingBrokerMock.Verify(broker =>
+                broker.LogError(It.Is(SameExceptionAs(expectedGeoServiceException))),
                     Times.Once);
         }
     }

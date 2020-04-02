@@ -2,9 +2,9 @@
 // Copyright (c) PiorSoft, LLC All rights reserved.
 // ---------------------------------------------------------------
 
-using System.Linq;
 using GeoApi.Models;
 using GeoApi.Models.Exceptions;
+using System.Linq;
 
 namespace GeoApi.Services
 {
