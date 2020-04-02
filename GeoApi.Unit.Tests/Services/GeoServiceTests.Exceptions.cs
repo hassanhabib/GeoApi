@@ -78,7 +78,7 @@ namespace GeoApi.Unit.Tests.Services
                     Times.Once);
 
             this.loggingBrokerMock.Verify(broker =>
-                broker.LogError(It.Is(SameExceptionAs(expectedGeoDependencyException))),
+                broker.LogCritical(It.Is(SameExceptionAs(expectedGeoDependencyException))),
                     Times.Once);
         }
     }

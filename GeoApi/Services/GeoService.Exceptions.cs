@@ -4,6 +4,7 @@
 
 using GeoApi.Models;
 using GeoApi.Models.Exceptions;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
@@ -19,6 +20,10 @@ namespace GeoApi.Services
             try
             {
                 return returningGeosFunction();
+            }
+            catch (SqlException sqlException)
+            {
+                throw CreateAndLogCriticalDependencyException(sqlException);
             }
             catch (DbUpdateException dbUpdateException)
             {
