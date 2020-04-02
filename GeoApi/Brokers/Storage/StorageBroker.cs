@@ -10,5 +10,10 @@ namespace GeoApi.Brokers.Storage
     {
         public StorageBroker(DbContextOptions<StorageBroker> options)
             : base(options) => this.Database.Migrate();
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            SeedGeos(modelBuilder);
+        }
     }
 }

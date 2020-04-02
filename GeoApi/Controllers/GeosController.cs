@@ -15,7 +15,6 @@ namespace GeoApi.Controllers
     public class GeosController : ControllerBase
     {
         private readonly IGeoService geoService;
-
         public GeosController(IGeoService geoService) => this.geoService = geoService; 
 
         [HttpGet]
