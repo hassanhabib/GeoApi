@@ -20,13 +20,13 @@ namespace GeoApi.Services
             {
                 return returningGeosFunction();
             }
-            catch (EmptyGeosException emptyGeosException)
-            {
-                throw CreateAndLogCriticalDependencyException(emptyGeosException);
-            }
             catch (DbUpdateException dbUpdateException)
             {
                 throw CreateAndLogDependencyException(dbUpdateException);
+            }
+            catch (EmptyGeosException emptyGeosException)
+            {
+                throw CreateAndLogCriticalDependencyException(emptyGeosException);
             }
             catch (Exception serviceException)
             {

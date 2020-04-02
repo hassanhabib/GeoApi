@@ -6,10 +6,12 @@ using GeoApi.Brokers.Logging;
 using GeoApi.Brokers.Storage;
 using GeoApi.Models;
 using GeoApi.Services;
+using Microsoft.Data.SqlClient;
 using Moq;
 using System;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Runtime.Serialization;
 using Tynamix.ObjectFiller;
 
 namespace GeoApi.Unit.Tests.Services
@@ -47,6 +49,10 @@ namespace GeoApi.Unit.Tests.Services
 
             return filler;
         }
+
+        private SqlException CreateSqlException() =>
+            FormatterServices.GetUninitializedObject(typeof(SqlException)) as SqlException;
+
         private Expression<Func<Exception, bool>> SameExceptionAs(Exception expectedException)
         {
             return actualException => actualException.Message == expectedException.Message

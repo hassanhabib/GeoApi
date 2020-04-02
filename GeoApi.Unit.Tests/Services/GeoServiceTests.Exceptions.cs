@@ -3,9 +3,11 @@
 // ---------------------------------------------------------------
 
 using GeoApi.Models.Exceptions;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Moq;
 using System;
+using System.Runtime.Serialization;
 using Xunit;
 
 namespace GeoApi.Unit.Tests.Services
@@ -55,6 +57,28 @@ namespace GeoApi.Unit.Tests.Services
 
             this.loggingBrokerMock.Verify(broker =>
                 broker.LogError(It.Is(SameExceptionAs(expectedGeoServiceException))),
+                    Times.Once);
+        }
+
+        [Fact]
+        public void ShouldThrowDependencyExceptionOnRetrieveAllIfSqlExceptionWasThrownAndLogIt()
+        {
+            SqlException sqlException = CreateSqlException();
+            var expectedGeoDependencyException = new GeoDependencyException(sqlException);
+
+            this.storageBrokerMock.Setup(broker =>
+                broker.SelectAllGeos())
+                    .Throws(sqlException);
+
+            // when . then
+            Assert.Throws<GeoDependencyException>(() => this.geoService.RetrieveAllGeos());
+
+            this.storageBrokerMock.Verify(broker =>
+                broker.SelectAllGeos(),
+                    Times.Once);
+
+            this.loggingBrokerMock.Verify(broker =>
+                broker.LogError(It.Is(SameExceptionAs(expectedGeoDependencyException))),
                     Times.Once);
         }
     }
