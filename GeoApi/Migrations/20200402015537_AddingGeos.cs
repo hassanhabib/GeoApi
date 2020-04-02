@@ -2,8 +2,8 @@
 // Copyright (c) PiorSoft, LLC All rights reserved.
 // ---------------------------------------------------------------
 
-using System;
 using Microsoft.EntityFrameworkCore.Migrations;
+using System;
 
 namespace GeoApi.Migrations
 {

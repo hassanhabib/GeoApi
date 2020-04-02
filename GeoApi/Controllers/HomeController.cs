@@ -11,7 +11,7 @@ namespace GeoApi.Controllers
     public class HomeController : ControllerBase
     {
         [HttpGet]
-        public ActionResult<string> Get() => 
+        public ActionResult<string> Get() =>
             Ok("Sorry Mario, the princess is in another castle!");
     }
 }

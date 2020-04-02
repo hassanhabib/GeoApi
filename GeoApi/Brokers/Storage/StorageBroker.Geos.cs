@@ -12,6 +12,6 @@ namespace GeoApi.Brokers.Storage
     {
         public DbSet<Geo> Geos { get; set; }
 
-        public IQueryable<Geo> SelectAllGeos() => this.Geos.AsQueryable();       
+        public IQueryable<Geo> SelectAllGeos() => this.Geos.AsQueryable();
     }
 }

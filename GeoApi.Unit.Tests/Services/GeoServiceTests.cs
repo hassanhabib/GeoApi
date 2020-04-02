@@ -2,12 +2,14 @@
 // Copyright (c) PiorSoft, LLC All rights reserved.
 // ---------------------------------------------------------------
 
-using System.Linq;
 using GeoApi.Brokers.Logging;
 using GeoApi.Brokers.Storage;
 using GeoApi.Models;
 using GeoApi.Services;
 using Moq;
+using System;
+using System.Linq;
+using System.Linq.Expressions;
 using Tynamix.ObjectFiller;
 
 namespace GeoApi.Unit.Tests.Services
@@ -30,12 +32,25 @@ namespace GeoApi.Unit.Tests.Services
 
         private IQueryable<Geo> CreateRandomGeos()
         {
-            int randomGeoCount = new IntRange().GetValue();
+            int randomGeoCount = new IntRange(min: 3, max: 10).GetValue();
             Filler<Geo> geoFiller = CreateGeoFiller();
 
             return geoFiller.Create(randomGeoCount).AsQueryable();
         }
 
-        private Filler<Geo> CreateGeoFiller() => new Filler<Geo>();
+        private Filler<Geo> CreateGeoFiller()
+        {
+            var filler = new Filler<Geo>();
+            
+            filler.Setup()
+                .OnProperty(geo => geo.City).Use(new CityName());
+
+            return filler;
+        }
+        private Expression<Func<Exception, bool>> SameExceptionAs(Exception expectedException)
+        {
+            return actualException => actualException.Message == expectedException.Message
+                && actualException.InnerException.Message == expectedException.InnerException.Message;
+        }
     }
 }
