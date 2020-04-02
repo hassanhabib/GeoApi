@@ -3,18 +3,16 @@
 // ---------------------------------------------------------------
 
 using System.Linq;
-using FluentAssertions;
 using GeoApi.Brokers.Logging;
 using GeoApi.Brokers.Storage;
 using GeoApi.Models;
 using GeoApi.Services;
 using Moq;
 using Tynamix.ObjectFiller;
-using Xunit;
 
-namespace GeoApi.Unit.Tests
+namespace GeoApi.Unit.Tests.Services
 {
-    public class GeoServiceTests
+    public partial class GeoServiceTests
     {
         private readonly Mock<IStorageBroker> storageBrokerMock;
         private readonly Mock<ILoggingBroker> loggingBrokerMock;
@@ -28,29 +26,6 @@ namespace GeoApi.Unit.Tests
             this.geoService = new GeoService(
                 this.storageBrokerMock.Object,
                 this.loggingBrokerMock.Object);
-        }
-
-        [Fact]
-        public void ShouldRetrieveAllGeos()
-        {
-            // given
-            IQueryable<Geo> randomGeos = CreateRandomGeos();
-            IQueryable<Geo> storageGeos = randomGeos;
-            IQueryable<Geo> expectedGeos = storageGeos;
-
-            this.storageBrokerMock.Setup(broker =>
-                broker.SelectAllGeos())
-                    .Returns(storageGeos);
-
-            // when
-            IQueryable<Geo> actualGeos = this.geoService.RetrieveAllGeos();
-
-            // then
-            actualGeos.Should().BeEquivalentTo(expectedGeos);
-
-            this.storageBrokerMock.Verify(broker =>
-                broker.SelectAllGeos(),
-                    Times.Once);
         }
 
         private IQueryable<Geo> CreateRandomGeos()
