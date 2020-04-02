@@ -28,6 +28,10 @@ namespace GeoApi.Services
             {
                 throw CreateAndLogDependencyException(dbUpdateException);
             }
+            catch (Exception serviceException)
+            {
+                throw CreateAndLogServiceException(serviceException);
+            }
         }
 
         private GeoDependencyException CreateAndLogCriticalDependencyException(Exception exception)
@@ -44,6 +48,14 @@ namespace GeoApi.Services
             this.loggingBroker.LogError(geoDependencyException);
 
             return geoDependencyException;
+        }
+
+        private GeoServiceException CreateAndLogServiceException(Exception exception)
+        {
+            var geoServiceException = new GeoServiceException(exception);
+            this.loggingBroker.LogError(geoServiceException);
+
+            return geoServiceException;
         }
     }
 }
