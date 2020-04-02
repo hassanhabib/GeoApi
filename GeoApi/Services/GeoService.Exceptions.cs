@@ -6,6 +6,7 @@ using System;
 using System.Linq;
 using GeoApi.Models;
 using GeoApi.Models.Exceptions;
+using Microsoft.EntityFrameworkCore;
 
 namespace GeoApi.Services
 {
@@ -23,12 +24,24 @@ namespace GeoApi.Services
             {
                 throw CreateAndLogCriticalDependencyException(emptyGeosException);
             }
+            catch (DbUpdateException dbUpdateException)
+            {
+                throw CreateAndLogDependencyException(dbUpdateException);
+            }
         }
 
         private GeoDependencyException CreateAndLogCriticalDependencyException(Exception exception)
         {
             var geoDependencyException = new GeoDependencyException(exception);
             this.loggingBroker.LogCritical(geoDependencyException);
+
+            return geoDependencyException;
+        }
+
+        private GeoDependencyException CreateAndLogDependencyException(Exception exception)
+        {
+            var geoDependencyException = new GeoDependencyException(exception);
+            this.loggingBroker.LogError(geoDependencyException);
 
             return geoDependencyException;
         }
