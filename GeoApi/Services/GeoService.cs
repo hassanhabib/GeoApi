@@ -23,9 +23,6 @@ namespace GeoApi.Services
             this.loggingBroker = loggingBroker;
         }
 
-        public IQueryable<Geo> RetrieveAllGeos()
-        {
-            throw new NotImplementedException();
-        }
+        public IQueryable<Geo> RetrieveAllGeos() => this.storageBroker.SelectAllGeos();
     }
 }
