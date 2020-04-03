@@ -2,6 +2,7 @@
 // Copyright (c) PiorSoft, LLC All rights reserved.
 // ---------------------------------------------------------------
 
+using Newtonsoft.Json;
 using System;
 
 namespace GeoApi.Models
@@ -13,6 +14,8 @@ namespace GeoApi.Models
         public string State { get; set; }
         public double Longitude { get; set; }
         public double Latitude { get; set; }
+
+        [JsonProperty("zip")]
         public int ZipCode { get; set; }
     }
 }

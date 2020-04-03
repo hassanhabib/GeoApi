@@ -2,9 +2,11 @@
 // Copyright (c) PiorSoft, LLC All rights reserved.
 // ---------------------------------------------------------------
 
-using System;
+using System.Collections.Generic;
+using System.IO;
 using GeoApi.Models;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 
 namespace GeoApi.Brokers.Storage
 {
@@ -12,17 +14,10 @@ namespace GeoApi.Brokers.Storage
     {
         private static void SeedGeos(ModelBuilder modelBuilder)
         {
-            var geo = new Geo
-            {
-                Id = Guid.Parse("0bbef118-c9cb-426f-bed2-2f5648a98035"),
-                City = "Redmond",
-                State = "WA",
-                Latitude = 47.671796,
-                Longitude = -122.123242,
-                ZipCode = 98052
-            };
+            var jsonData = File.ReadAllText(@"AllData.json");
+            List<Geo> allGeos = JsonConvert.DeserializeObject<List<Geo>>(jsonData);
+            modelBuilder.Entity<Geo>().HasData(allGeos);
 
-            modelBuilder.Entity<Geo>().HasData(geo);
         }
     }
 }
