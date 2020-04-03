@@ -5,6 +5,7 @@
 using GeoApi.Brokers.Logging;
 using GeoApi.Brokers.Storage;
 using GeoApi.Services;
+using Microsoft.AspNet.OData.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -25,7 +26,8 @@ namespace GeoApi
         {
             InitializeStorage(services);
             InitializeLoggers(services);
-            services.AddControllers();
+            AddControllersAndJsonConfigurations(services);
+            services.AddOData();
             services.AddTransient<IGeoService, GeoService>();
         }
 
@@ -45,6 +47,8 @@ namespace GeoApi
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.EnableDependencyInjection();
+                endpoints.Select().Filter().Count();
             });
         }
 
@@ -59,6 +63,13 @@ namespace GeoApi
         {
             services.AddSingleton<ILoggingBroker, LoggingBroker>();
             services.AddTransient<ILogger, Logger<ILoggingBroker>>();
+        }
+
+        private static void AddControllersAndJsonConfigurations(IServiceCollection services)
+        {
+            services.AddControllers().AddMvcOptions(option =>
+                option.MaxIAsyncEnumerableBufferLimit = int.MaxValue)
+                    .AddNewtonsoftJson();
         }
     }
 }

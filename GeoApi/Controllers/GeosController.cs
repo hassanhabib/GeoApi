@@ -6,6 +6,7 @@ using System.Linq;
 using GeoApi.Models;
 using GeoApi.Models.Exceptions;
 using GeoApi.Services;
+using Microsoft.AspNet.OData;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GeoApi.Controllers
@@ -18,6 +19,7 @@ namespace GeoApi.Controllers
         public GeosController(IGeoService geoService) => this.geoService = geoService; 
 
         [HttpGet]
+        [EnableQuery]
         public ActionResult<IQueryable<Geo>> Get()
         {
             try
