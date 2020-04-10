@@ -2,8 +2,8 @@
 // Copyright (c) PiorSoft, LLC All rights reserved.
 // ---------------------------------------------------------------
 
-using Microsoft.Extensions.Logging;
 using System;
+using Microsoft.Extensions.Logging;
 
 namespace GeoApi.Brokers.Logging
 {

@@ -2,8 +2,8 @@
 // Copyright (c) PiorSoft, LLC All rights reserved.
 // ---------------------------------------------------------------
 
-using Newtonsoft.Json;
 using System;
+using Newtonsoft.Json;
 
 namespace GeoApi.Models
 {

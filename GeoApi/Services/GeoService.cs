@@ -2,10 +2,10 @@
 // Copyright (c) PiorSoft, LLC All rights reserved.
 // ---------------------------------------------------------------
 
+using System.Linq;
 using GeoApi.Brokers.Logging;
 using GeoApi.Brokers.Storage;
 using GeoApi.Models;
-using System.Linq;
 
 namespace GeoApi.Services
 {
