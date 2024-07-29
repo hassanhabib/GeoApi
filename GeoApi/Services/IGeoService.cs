@@ -3,6 +3,7 @@
 // ---------------------------------------------------------------
 
 using System.Linq;
+using System.Threading.Tasks;
 using GeoApi.Models;
 
 namespace GeoApi.Services
@@ -10,5 +11,6 @@ namespace GeoApi.Services
     public interface IGeoService
     {
         IQueryable<Geo> RetrieveAllGeos();
+        ValueTask<IQueryable<Geo>> RetrieveAllGeosAsync();
     }
 }

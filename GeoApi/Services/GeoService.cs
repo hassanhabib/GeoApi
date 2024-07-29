@@ -3,6 +3,7 @@
 // ---------------------------------------------------------------
 
 using System.Linq;
+using System.Threading.Tasks;
 using GeoApi.Brokers.Logging;
 using GeoApi.Brokers.Storage;
 using GeoApi.Models;
@@ -22,10 +23,20 @@ namespace GeoApi.Services
             this.loggingBroker = loggingBroker;
         }
 
-        public IQueryable<Geo> RetrieveAllGeos() => TryCatch(() =>
+        public IQueryable<Geo> RetrieveAllGeos() => 
+        TryCatch(() =>
         {
-            IQueryable<Geo> storageGeos = this.storageBroker.SelectAllGeos();
-            ValidateStorageGeos(storageGeos);
+            IQueryable<Geo> storageGeos =
+                this.storageBroker.SelectAllGeos();
+
+            return storageGeos;
+        });
+
+        public ValueTask<IQueryable<Geo>> RetrieveAllGeosAsync() => 
+        TryCatch(async () =>
+        {
+            IQueryable<Geo> storageGeos = 
+                await this.storageBroker.SelectAllGeosAsync();
 
             return storageGeos;
         });

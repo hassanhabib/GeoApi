@@ -3,6 +3,7 @@
 // ---------------------------------------------------------------
 
 using System.Linq;
+using System.Threading.Tasks;
 using GeoApi.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,6 +13,10 @@ namespace GeoApi.Brokers.Storage
     {
         public DbSet<Geo> Geos { get; set; }
 
-        public IQueryable<Geo> SelectAllGeos() => this.Geos.AsQueryable();
+        public IQueryable<Geo> SelectAllGeos() => 
+            this.Geos;
+
+        public async ValueTask<IQueryable<Geo>> SelectAllGeosAsync() =>
+            this.Geos;
     }
 }
